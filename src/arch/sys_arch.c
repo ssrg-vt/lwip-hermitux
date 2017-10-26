@@ -513,10 +513,10 @@ int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, st
 	return ret;
 }
 
-int fcntl(int s, int cmd, int val)
+/* int fcntl(int s, int cmd, int val)
 {
 	return lwip_fcntl(s & ~LWIP_FD_BIT, cmd, val);
-}
+} */
 
 int shutdown(int socket, int how)
 {
