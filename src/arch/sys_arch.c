@@ -528,9 +528,11 @@ int shutdown(int socket, int how)
 // TODO: replace dummy function
 int gethostname(char *name, size_t len)
 {
-	strncpy(name, "hermit", len);
+	//strncpy(name, "hermit", len);
+	
+	return sys_gethostname(name, len);
 
-	return 0;
+//	return 0;
 }
 
 struct hostent *gethostbyname(const char* name)
