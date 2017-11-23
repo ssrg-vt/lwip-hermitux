@@ -253,6 +253,11 @@
 #endif
 
 /**
+ * SO_REUSE==1: Enable SO_REUSEADDR option.
+ */
+#define SO_REUSE			1
+
+/**
  * LWIP_COMPAT_SOCKETS==1: Enable BSD-style sockets functions names.
  * (only used if you use sockets.c)
  */

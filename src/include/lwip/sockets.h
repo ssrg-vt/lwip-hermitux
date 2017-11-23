@@ -164,6 +164,38 @@ struct msghdr {
 #define SOCK_DGRAM      2
 #define SOCK_RAW        3
 
+#ifdef __hermit__
+
+/*
+ * HermiTux want to be binary compatible to Linux.
+ * => use the same value for the SO_XXXX.
+ */
+#define SO_DEBUG        1
+#define SO_REUSEADDR    2
+#define SO_TYPE         3
+#define SO_ERROR        4
+#define SO_DONTROUTE    5
+#define SO_BROADCAST    6
+#define SO_SNDBUF       7
+#define SO_RCVBUF       8
+#define SO_SNDBUFFORCE  32
+#define SO_RCVBUFFORCE  33
+#define SO_KEEPALIVE    9
+#define SO_OOBINLINE    10
+#define SO_NO_CHECK     11
+#define SO_PRIORITY     12
+#define SO_LINGER       13
+#define SO_BSDCOMPAT    14
+#define SO_REUSEPORT    15
+#define SO_PASSCRED     16
+#define SO_PEERCRED     17
+#define SO_RCVLOWAT     18
+#define SO_SNDLOWAT     19
+#define SO_RCVTIMEO     20
+#define SO_SNDTIMEO     21
+#define SO_ACCEPTCONN   30
+
+#else
 /*
  * Option flags per-socket. These must match the SOF_ flags in ip.h (checked in init.c)
  */
@@ -194,6 +226,7 @@ struct msghdr {
 #define SO_CONTIMEO    0x1009 /* Unimplemented: connect timeout */
 #define SO_NO_CHECK    0x100a /* don't create UDP checksum */
 
+#endif
 
 /*
  * Structure used for manipulating linger option.
@@ -206,8 +239,11 @@ struct linger {
 /*
  * Level number for (get/set)sockopt() to apply to socket itself.
  */
+#ifdef __hermit__
+#define SOL_SOCKET      1
+#else
 #define  SOL_SOCKET  0xfff    /* options for socket level */
-
+#endif
 
 #define AF_UNSPEC       0
 #define AF_INET         2
