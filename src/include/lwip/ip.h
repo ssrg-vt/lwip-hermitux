@@ -94,8 +94,13 @@ struct ip_pcb {
 /*
  * Option flags per-socket. These are the same like SO_XXX in sockets.h
  */
-#define SOF_REUSEADDR     0x04U  /* allow local address reuse */
-#define SOF_KEEPALIVE     0x08U  /* keep connections alive */
+
+// Pierre: Linux ABI compatibility for SOF_REUSEADDR and SOF_KEEPALIVE
+//#define SOF_REUSEADDR     0x04U  /* allow local address reuse */
+#define SOF_REUSEADDR     0x02U  /* allow local address reuse */
+//#define SOF_KEEPALIVE     0x08U  /* keep connections alive */
+#define SOF_KEEPALIVE     0x09U  /* keep connections alive */
+
 #define SOF_BROADCAST     0x20U  /* permit to send and to receive broadcast messages (see IP_SOF_BROADCAST option) */
 
 /* These flags are inherited (e.g. from a listen-pcb to a connection-pcb): */

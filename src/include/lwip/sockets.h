@@ -167,8 +167,12 @@ struct msghdr {
 /*
  * Option flags per-socket. These must match the SOF_ flags in ip.h (checked in init.c)
  */
-#define SO_REUSEADDR   0x0004 /* Allow local address reuse */
-#define SO_KEEPALIVE   0x0008 /* keep connections alive */
+// Pierre: Binary compatibility with Linux for SO_REUSEADDR and SO_KEEPALIVE
+//#define SO_REUSEADDR   0x0004 /* Allow local address reuse */
+#define SO_REUSEADDR   2 /* Allow local address reuse */
+//#define SO_KEEPALIVE   0x0008 /* keep connections alive */
+#define SO_KEEPALIVE   9 /* keep connections alive */
+
 #define SO_BROADCAST   0x0020 /* permit to send and to receive broadcast messages (see IP_SOF_BROADCAST option) */
 
 
@@ -176,14 +180,17 @@ struct msghdr {
  * Additional options, not kept in so_options.
  */
 #define SO_DEBUG       0x0001 /* Unimplemented: turn on debugging info recording */
-#define SO_ACCEPTCONN  0x0002 /* socket has had listen() */
+// Pierre: Binary compatibility with Linux for SO_ACCEPTCONN and SO_SNDBUF
+//#define SO_ACCEPTCONN  0x0002 /* socket has had listen() */
+#define SO_ACCEPTCONN  30 /* socket has had listen() */
 #define SO_DONTROUTE   0x0010 /* Unimplemented: just use interface addresses */
 #define SO_USELOOPBACK 0x0040 /* Unimplemented: bypass hardware when possible */
 #define SO_LINGER      0x0080 /* linger on close if data present */
 #define SO_DONTLINGER  ((int)(~SO_LINGER))
 #define SO_OOBINLINE   0x0100 /* Unimplemented: leave received OOB data in line */
 #define SO_REUSEPORT   0x0200 /* Unimplemented: allow local address & port reuse */
-#define SO_SNDBUF      0x1001 /* Unimplemented: send buffer size */
+//#define SO_SNDBUF      0x1001 /* Unimplemented: send buffer size */
+#define SO_SNDBUF      7 /* Unimplemented: send buffer size */
 #define SO_RCVBUF      0x1002 /* receive buffer size */
 #define SO_SNDLOWAT    0x1003 /* Unimplemented: send low-water mark */
 #define SO_RCVLOWAT    0x1004 /* Unimplemented: receive low-water mark */
@@ -206,7 +213,9 @@ struct linger {
 /*
  * Level number for (get/set)sockopt() to apply to socket itself.
  */
-#define  SOL_SOCKET  0xfff    /* options for socket level */
+// Pierre: Binary compatibility with Linux for SOL_SOCKET
+//#define  SOL_SOCKET  0xfff    /* options for socket level */
+#define  SOL_SOCKET  0x1    /* options for socket level */
 
 
 #define AF_UNSPEC       0
