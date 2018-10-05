@@ -128,8 +128,10 @@ static inline void sys_arch_unprotect(sys_prot_t pval)
 }
 #endif
 
-// FIXME pierre: find a nice value here
-//#define LWIP_FD_BIT	(1 << 30)
+// FIXME we should set a large number here to allow a lot of non-socket
+// file descriptors (i.e. all below LWIP_FD_BIT. However redis is indexing
+// a lot of stuff with socket file descriptors values so they cannot be too
+// large
 #define LWIP_FD_BIT	(1 << 12)
 
 //#ifndef __KERNEL__

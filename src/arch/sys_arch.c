@@ -331,15 +331,7 @@ static inline int* libc_errno(void)
 
 int hermit_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 {
-	LOG_INFO("before lwip accept %d\n", s);
 	int fd = lwip_accept(s & ~LWIP_FD_BIT, addr, addrlen);
-	LOG_INFO("after lwip accept %d\n", s);
-
-	//if (fd < 0)
-	//{
-	//	*libc_errno() = errno;
-	//	return -1;
-	//}
 
 	if(fd < 0)
 		return fd;
@@ -347,198 +339,60 @@ int hermit_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 	return fd | LWIP_FD_BIT;
 }
 
-int hermit_bind(int s, const struct sockaddr *name, socklen_t namelen)
-{
-	int ret = lwip_bind(s & ~LWIP_FD_BIT, name, namelen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_bind(int s, const struct sockaddr *name, socklen_t namelen) {
+	return lwip_bind(s & ~LWIP_FD_BIT, name, namelen);
 }
 
-int hermit_getpeername(int s, struct sockaddr *name, socklen_t *namelen)
-{
-	int ret = lwip_getpeername(s & ~LWIP_FD_BIT, name, namelen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_getpeername(int s, struct sockaddr *name, socklen_t *namelen) {
+	return lwip_getpeername(s & ~LWIP_FD_BIT, name, namelen);
 }
 
-int hermit_close(int s)
-{
-	int ret = lwip_close(s & ~LWIP_FD_BIT);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_close(int s) {
+	return lwip_close(s & ~LWIP_FD_BIT);
 }
 
-int hermit_getsockname(int s, struct sockaddr *name, socklen_t *namelen)
-{
-	int ret = lwip_getsockname(s & ~LWIP_FD_BIT, name, namelen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_getsockname(int s, struct sockaddr *name, socklen_t *namelen) {
+	return lwip_getsockname(s & ~LWIP_FD_BIT, name, namelen);
 }
 
-int hermit_getsockopt(int s, int level, int optname, void *optval, socklen_t *optlen)
-{
-	int ret = lwip_getsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_getsockopt(int s, int level, int optname, void *optval,
+		socklen_t *optlen) {
+	return lwip_getsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
 }
 
-int hermit_setsockopt(int s, int level, int optname, const void *optval, socklen_t optlen)
-{
-	int ret = lwip_setsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_setsockopt(int s, int level, int optname, const void *optval,
+		socklen_t optlen) {
+	return lwip_setsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
 }
 
-int hermit_connect(int s, const struct sockaddr *name, socklen_t namelen)
-{
-	int ret = lwip_connect(s & ~LWIP_FD_BIT, name, namelen);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_connect(int s, const struct sockaddr *name, socklen_t namelen) {
+	return lwip_connect(s & ~LWIP_FD_BIT, name, namelen);
 }
 
-int hermit_listen(int s, int backlog)
-{
-	int ret = lwip_listen(s & ~LWIP_FD_BIT, backlog);
-
-#if 0
-	if (ret)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_listen(int s, int backlog) {
+	return lwip_listen(s & ~LWIP_FD_BIT, backlog);
 }
 
-int hermit_recv(int s, void *mem, size_t len, int flags)
-{
-	int ret = lwip_recv(s & ~LWIP_FD_BIT, mem, len, flags);
-
-#if 0
-	if (ret < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_recv(int s, void *mem, size_t len, int flags) {
+	return lwip_recv(s & ~LWIP_FD_BIT, mem, len, flags);
 }
 
-int hermit_recvfrom(int s, void *mem, size_t len, int flags, struct sockaddr *from, socklen_t *fromlen)
-{
-	int ret = lwip_recvfrom(s & ~LWIP_FD_BIT, mem, len, flags, from, fromlen);
-
-#if 0
-	if (ret < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_recvfrom(int s, void *mem, size_t len, int flags,
+		struct sockaddr *from, socklen_t *fromlen) {
+	return lwip_recvfrom(s & ~LWIP_FD_BIT, mem, len, flags, from, fromlen);
 }
 
-int hermit_send(int s, const void *dataptr, size_t size, int flags)
-{
-	int ret = lwip_send(s & ~LWIP_FD_BIT, dataptr, size, flags);
-
-#if 0
-	if (ret < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_send(int s, const void *dataptr, size_t size, int flags) {
+	return lwip_send(s & ~LWIP_FD_BIT, dataptr, size, flags);
 }
 
-int hermit_sendto(int s, const void *dataptr, size_t size, int flags, const struct sockaddr *to, socklen_t tolen)
-{
-	int ret = lwip_sendto(s & ~LWIP_FD_BIT, dataptr, size, flags, to, tolen);
-
-#if 0
-	if (ret < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
-	return ret;
+int hermit_sendto(int s, const void *dataptr, size_t size, int flags,
+		const struct sockaddr *to, socklen_t tolen) {
+	return lwip_sendto(s & ~LWIP_FD_BIT, dataptr, size, flags, to, tolen);
 }
 
-int hermit_socket(int domain, int type, int protocol)
-{
+int hermit_socket(int domain, int type, int protocol) {
 	int fd = lwip_socket(domain, type, protocol);
-	kprintf("internal socket: %d\n", fd);
-
-#if 0
-	if (fd < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
 
 	if(fd < 0)
 		return fd;
@@ -546,84 +400,60 @@ int hermit_socket(int domain, int type, int protocol)
 	return fd | LWIP_FD_BIT;
 }
 
+/* Use the same code as musl to access the fd_sets */
 #define FD_SETSIZE 8192
-
 typedef struct {
 		unsigned long fds_bits[FD_SETSIZE / 8 / sizeof(long)];
 } fd_setx;
 
-/* Use the same code as musl to access the fd_sets */
-#define FDX_ZERO(s) do { int __i; unsigned long *__b=(s)->fds_bits; for(__i=sizeof (fd_set)/sizeof (long); __i; __i--) *__b++=0; } while(0)
-#define FDX_SET(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] |= (1UL<<((d)%(8*sizeof(long)))))
-#define FDX_CLR(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] &= ~(1UL<<((d)%(8*sizeof(long)))))
-#define FDX_ISSET(d, s) !!((s)->fds_bits[(d)/(8*sizeof(long))] & (1UL<<((d)%(8*sizeof(long)))))
+#define FDX_ZERO(s) do { int __i; unsigned long *__b=(s)->fds_bits; \
+	for(__i=sizeof (fd_setx)/sizeof (long); __i; __i--) *__b++=0; } while(0)
+#define FDX_SET(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] \
+		|= (1UL<<((d)%(8*sizeof(long)))))
+#define FDX_CLR(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] \
+		&= ~(1UL<<((d)%(8*sizeof(long)))))
+#define FDX_ISSET(d, s) !!((s)->fds_bits[(d)/(8*sizeof(long))] \
+		& (1UL<<((d)%(8*sizeof(long)))))
 
-int hermit_select(int maxfdp1, fd_setx *readset, fd_setx *writeset, fd_setx *exceptset, struct timeval *timeout)
+int hermit_select(int maxfdp1, fd_setx *readset, fd_setx *writeset,
+		fd_setx *exceptset, struct timeval *timeout)
 {
 	int ret, i;
-	fd_setx rs, ws, es;
-
-	FDX_ZERO(&rs); FDX_ZERO(&ws); FDX_ZERO(&es);
-
-//	LOG_INFO("hermit_select: maxfdp1: %d\n", maxfdp1);
 
 	for(i=LWIP_FD_BIT; i<maxfdp1; i++) {
 		if(readset && FDX_ISSET(i, readset)) {
-//			LOG_INFO(" fd read set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
-//			FDX_CLR(i, readset);
-			FDX_SET(i & ~LWIP_FD_BIT, &rs);
+			FDX_CLR(i, readset);
+			FDX_SET(i & ~LWIP_FD_BIT, readset);
 		}
 
 		if(writeset && FDX_ISSET(i, writeset)) {
-//			LOG_INFO(" fd write set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
-//			FDX_CLR(i, writeset);
-			FDX_SET(i & ~LWIP_FD_BIT, &ws);
+			FDX_CLR(i, writeset);
+			FDX_SET(i & ~LWIP_FD_BIT, writeset);
 		}
 
 		if(exceptset && FDX_ISSET(i, exceptset)) {
-//			LOG_INFO(" fd except set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
-//			FDX_CLR(i, exceptset);
-			FDX_SET(i & ~LWIP_FD_BIT, &es);
+			FDX_CLR(i, exceptset);
+			FDX_SET(i & ~LWIP_FD_BIT, exceptset);
 		}
 	}
 
-	ret = lwip_select(maxfdp1-LWIP_FD_BIT, &rs, &ws, &es, timeout);
-
-	if(readset)
-		FDX_ZERO(readset);
-	if(writeset)
-		FDX_ZERO(writeset);
-	if(exceptset)
-		FDX_ZERO(exceptset);
-
-//	LOG_INFO(" <--- select\n");
-
-#if 0
-	if (ret < 0) {
-		*libc_errno() = errno;
-		return -1;
-	}
-#endif
-
+	ret = lwip_select(maxfdp1-LWIP_FD_BIT, readset, writeset, exceptset, timeout);
 	if(ret < 0)
 		return ret;
 
 	for(i=0; i<maxfdp1-LWIP_FD_BIT; i++) {
-		if(readset && FDX_SET(i, &rs)) {
-			LOG_INFO(" fd read set map back %d -> %d\n", i, i | LWIP_FD_BIT);
-//			FDX_CLR(i, readset);
+		if(readset && FDX_ISSET(i, readset)) {
+			FDX_CLR(i, readset);
 			FDX_SET(i | LWIP_FD_BIT, readset);
 		}
 
-		if(writeset && FDX_SET(i, &ws)) {
-//			LOG_INFO(" fd write set map back %d -> %d\n", i, i | LWIP_FD_BIT);
-//			FDX_CLR(i, writeset);
+		if(writeset && FDX_ISSET(i, writeset)) {
+			FDX_CLR(i, writeset);
 			FDX_SET(i | LWIP_FD_BIT, writeset);
 		}
 
-		if(exceptset && FDX_SET(i, &es)) {
-//			LOG_INFO(" fd except set map back %d -> %d\n", i, i | LWIP_FD_BIT);
-//			FDX_CLR(i, exceptset);
+		if(exceptset && FDX_ISSET(i, exceptset)) {
+			FDX_CLR(i, exceptset);
 			FDX_SET(i | LWIP_FD_BIT, exceptset);
 		}
 
@@ -635,45 +465,40 @@ int hermit_select(int maxfdp1, fd_setx *readset, fd_setx *writeset, fd_setx *exc
 	return ret;
 }
 
-int hermit_fcntl(int s, int cmd, int val)
-{
+int hermit_fcntl(int s, int cmd, int val) {
 	return lwip_fcntl(s & ~LWIP_FD_BIT, cmd, val);
 }
 
-int hermit_shutdown(int socket, int how)
-{
+int hermit_shutdown(int socket, int how) {
 	return lwip_shutdown(socket & ~LWIP_FD_BIT, how);
 }
 
 #if LWIP_DNS
 
 // TODO: replace dummy function
-int hermit_gethostname(char *name, size_t len)
-{
+int hermit_gethostname(char *name, size_t len) {
 	//strncpy(name, "hermit", len);
-	
+
 	return sys_gethostname(name, len);
 
 //	return 0;
 }
 
-struct hostent *hermit_gethostbyname(const char* name)
-{
+struct hostent *hermit_gethostbyname(const char* name) {
 	return lwip_gethostbyname(name);
 }
 
-int hermit_gethostbyname_r(const char *name, struct hostent *ret, char *buf, size_t buflen, struct hostent **result, int *h_errnop)
-{
+int hermit_gethostbyname_r(const char *name, struct hostent *ret, char *buf,
+		size_t buflen, struct hostent **result, int *h_errnop) {
 	return lwip_gethostbyname_r(name, ret, buf, buflen, result, h_errnop);
 }
 
-int hermit_getaddrinfo(const char *node, const char *service, const struct addrinfo *hints, struct addrinfo **res)
-{
+int hermit_getaddrinfo(const char *node, const char *service,
+		const struct addrinfo *hints, struct addrinfo **res) {
 	return lwip_getaddrinfo(node, service, hints, res);
 }
 
-void hermit_freeaddrinfo(struct addrinfo *res)
-{
+void hermit_freeaddrinfo(struct addrinfo *res) {
 	lwip_freeaddrinfo(res);
 }
 
