@@ -91,6 +91,7 @@ typedef size_t mem_ptr_t;
 /* define errno to determine error code */
 #define ERRNO
 #ifdef __KERNEL__
+#include <hermit/tasks_types.h>
 #define errno per_core(current_task)->lwip_err
 #endif
 
@@ -127,9 +128,12 @@ static inline void sys_arch_unprotect(sys_prot_t pval)
 }
 #endif
 
-#define LWIP_FD_BIT	(1 << 30)
+// FIXME pierre: find a nice value here
+//#define LWIP_FD_BIT	(1 << 30)
+#define LWIP_FD_BIT	(1 << 12)
 
-#ifndef __KERNEL__
+//#ifndef __KERNEL__
+#if 0
 struct sockaddr;
 struct timeval;
 struct hostent;
@@ -174,7 +178,7 @@ int getaddrinfo(const char *node, const char *service, const struct addrinfo *hi
 void freeaddrinfo(struct addrinfo *res);
 int gethostname(char *name, size_t len);
 #else
-#define O_NONBLOCK	00004000
+//#define O_NONBLOCK	00004000
 #endif
 
 #endif /* __ARCH_CC_H__ */

@@ -50,6 +50,9 @@ static spinlock_irqsave_t lwprot_lock;
 #endif
 #endif
 
+// forward declaration of a helper function
+static void __rand_init(void);
+
 /** Returns the current time in milliseconds,
  * may be the same as sys_jiffies or at least based on it. */
 u32_t sys_now(void)
@@ -74,6 +77,7 @@ void sys_init(void)
 	spinlock_irqsave_init(&lwprot_lock);
 #endif
 #endif
+	__rand_init();
 }
 
 extern int32_t boot_processor;
@@ -325,186 +329,304 @@ static inline int* libc_errno(void)
 
 #if LWIP_SOCKET
 
-int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
+int hermit_accept(int s, struct sockaddr *addr, socklen_t *addrlen)
 {
+	LOG_INFO("before lwip accept %d\n", s);
 	int fd = lwip_accept(s & ~LWIP_FD_BIT, addr, addrlen);
+	LOG_INFO("after lwip accept %d\n", s);
 
-	if (fd < 0)
-	{
-		*libc_errno() = errno;
-		return -1;
-	}
+	//if (fd < 0)
+	//{
+	//	*libc_errno() = errno;
+	//	return -1;
+	//}
+
+	if(fd < 0)
+		return fd;
 
 	return fd | LWIP_FD_BIT;
 }
 
-int bind(int s, const struct sockaddr *name, socklen_t namelen)
+int hermit_bind(int s, const struct sockaddr *name, socklen_t namelen)
 {
 	int ret = lwip_bind(s & ~LWIP_FD_BIT, name, namelen);
 
-
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int getpeername(int s, struct sockaddr *name, socklen_t *namelen)
+int hermit_getpeername(int s, struct sockaddr *name, socklen_t *namelen)
 {
 	int ret = lwip_getpeername(s & ~LWIP_FD_BIT, name, namelen);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int getsockname(int s, struct sockaddr *name, socklen_t *namelen)
+int hermit_close(int s)
+{
+	int ret = lwip_close(s & ~LWIP_FD_BIT);
+
+#if 0
+	if (ret)
+	{
+		*libc_errno() = errno;
+		return -1;
+	}
+#endif
+
+	return ret;
+}
+
+int hermit_getsockname(int s, struct sockaddr *name, socklen_t *namelen)
 {
 	int ret = lwip_getsockname(s & ~LWIP_FD_BIT, name, namelen);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int getsockopt(int s, int level, int optname, void *optval, socklen_t *optlen)
+int hermit_getsockopt(int s, int level, int optname, void *optval, socklen_t *optlen)
 {
 	int ret = lwip_getsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int setsockopt(int s, int level, int optname, const void *optval, socklen_t optlen)
+int hermit_setsockopt(int s, int level, int optname, const void *optval, socklen_t optlen)
 {
 	int ret = lwip_setsockopt(s & ~LWIP_FD_BIT, level, optname, optval, optlen);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int connect(int s, const struct sockaddr *name, socklen_t namelen)
+int hermit_connect(int s, const struct sockaddr *name, socklen_t namelen)
 {
 	int ret = lwip_connect(s & ~LWIP_FD_BIT, name, namelen);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int listen(int s, int backlog)
+int hermit_listen(int s, int backlog)
 {
 	int ret = lwip_listen(s & ~LWIP_FD_BIT, backlog);
 
+#if 0
 	if (ret)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
-	return 0;
+	return ret;
 }
 
-int recv(int s, void *mem, size_t len, int flags)
+int hermit_recv(int s, void *mem, size_t len, int flags)
 {
 	int ret = lwip_recv(s & ~LWIP_FD_BIT, mem, len, flags);
 
+#if 0
 	if (ret < 0)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
 	return ret;
 }
 
-int recvfrom(int s, void *mem, size_t len, int flags, struct sockaddr *from, socklen_t *fromlen)
+int hermit_recvfrom(int s, void *mem, size_t len, int flags, struct sockaddr *from, socklen_t *fromlen)
 {
 	int ret = lwip_recvfrom(s & ~LWIP_FD_BIT, mem, len, flags, from, fromlen);
 
+#if 0
 	if (ret < 0)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
 	return ret;
 }
 
-int send(int s, const void *dataptr, size_t size, int flags)
+int hermit_send(int s, const void *dataptr, size_t size, int flags)
 {
 	int ret = lwip_send(s & ~LWIP_FD_BIT, dataptr, size, flags);
 
+#if 0
 	if (ret < 0)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
 	return ret;
 }
 
-int sendto(int s, const void *dataptr, size_t size, int flags, const struct sockaddr *to, socklen_t tolen)
+int hermit_sendto(int s, const void *dataptr, size_t size, int flags, const struct sockaddr *to, socklen_t tolen)
 {
 	int ret = lwip_sendto(s & ~LWIP_FD_BIT, dataptr, size, flags, to, tolen);
 
+#if 0
 	if (ret < 0)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
 
 	return ret;
 }
 
-int socket(int domain, int type, int protocol)
+int hermit_socket(int domain, int type, int protocol)
 {
 	int fd = lwip_socket(domain, type, protocol);
+	kprintf("internal socket: %d\n", fd);
 
+#if 0
 	if (fd < 0)
 	{
 		*libc_errno() = errno;
 		return -1;
 	}
+#endif
+
+	if(fd < 0)
+		return fd;
 
 	return fd | LWIP_FD_BIT;
 }
 
-int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, struct timeval *timeout)
+#define FD_SETSIZE 8192
+
+typedef struct {
+		unsigned long fds_bits[FD_SETSIZE / 8 / sizeof(long)];
+} fd_setx;
+
+/* Use the same code as musl to access the fd_sets */
+#define FDX_ZERO(s) do { int __i; unsigned long *__b=(s)->fds_bits; for(__i=sizeof (fd_set)/sizeof (long); __i; __i--) *__b++=0; } while(0)
+#define FDX_SET(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] |= (1UL<<((d)%(8*sizeof(long)))))
+#define FDX_CLR(d, s)   ((s)->fds_bits[(d)/(8*sizeof(long))] &= ~(1UL<<((d)%(8*sizeof(long)))))
+#define FDX_ISSET(d, s) !!((s)->fds_bits[(d)/(8*sizeof(long))] & (1UL<<((d)%(8*sizeof(long)))))
+
+int hermit_select(int maxfdp1, fd_setx *readset, fd_setx *writeset, fd_setx *exceptset, struct timeval *timeout)
 {
-	int ret;
+	int ret, i;
+	fd_setx rs, ws, es;
 
-	ret = lwip_select(maxfdp1, readset, writeset, exceptset, timeout);
+	FDX_ZERO(&rs); FDX_ZERO(&ws); FDX_ZERO(&es);
 
-	if (ret < 0)
-	{
+//	LOG_INFO("hermit_select: maxfdp1: %d\n", maxfdp1);
+
+	for(i=LWIP_FD_BIT; i<maxfdp1; i++) {
+		if(readset && FDX_ISSET(i, readset)) {
+//			LOG_INFO(" fd read set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
+//			FDX_CLR(i, readset);
+			FDX_SET(i & ~LWIP_FD_BIT, &rs);
+		}
+
+		if(writeset && FDX_ISSET(i, writeset)) {
+//			LOG_INFO(" fd write set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
+//			FDX_CLR(i, writeset);
+			FDX_SET(i & ~LWIP_FD_BIT, &ws);
+		}
+
+		if(exceptset && FDX_ISSET(i, exceptset)) {
+//			LOG_INFO(" fd except set map %d -> %d\n", i, i & ~LWIP_FD_BIT);
+//			FDX_CLR(i, exceptset);
+			FDX_SET(i & ~LWIP_FD_BIT, &es);
+		}
+	}
+
+	ret = lwip_select(maxfdp1-LWIP_FD_BIT, &rs, &ws, &es, timeout);
+
+	if(readset)
+		FDX_ZERO(readset);
+	if(writeset)
+		FDX_ZERO(writeset);
+	if(exceptset)
+		FDX_ZERO(exceptset);
+
+//	LOG_INFO(" <--- select\n");
+
+#if 0
+	if (ret < 0) {
 		*libc_errno() = errno;
 		return -1;
+	}
+#endif
+
+	if(ret < 0)
+		return ret;
+
+	for(i=0; i<maxfdp1-LWIP_FD_BIT; i++) {
+		if(readset && FDX_SET(i, &rs)) {
+			LOG_INFO(" fd read set map back %d -> %d\n", i, i | LWIP_FD_BIT);
+//			FDX_CLR(i, readset);
+			FDX_SET(i | LWIP_FD_BIT, readset);
+		}
+
+		if(writeset && FDX_SET(i, &ws)) {
+//			LOG_INFO(" fd write set map back %d -> %d\n", i, i | LWIP_FD_BIT);
+//			FDX_CLR(i, writeset);
+			FDX_SET(i | LWIP_FD_BIT, writeset);
+		}
+
+		if(exceptset && FDX_SET(i, &es)) {
+//			LOG_INFO(" fd except set map back %d -> %d\n", i, i | LWIP_FD_BIT);
+//			FDX_CLR(i, exceptset);
+			FDX_SET(i | LWIP_FD_BIT, exceptset);
+		}
+
 	}
 
 	// check if another task is already ready
@@ -513,12 +635,12 @@ int select(int maxfdp1, fd_set *readset, fd_set *writeset, fd_set *exceptset, st
 	return ret;
 }
 
-/* int fcntl(int s, int cmd, int val)
+int hermit_fcntl(int s, int cmd, int val)
 {
 	return lwip_fcntl(s & ~LWIP_FD_BIT, cmd, val);
-} */
+}
 
-int shutdown(int socket, int how)
+int hermit_shutdown(int socket, int how)
 {
 	return lwip_shutdown(socket & ~LWIP_FD_BIT, how);
 }
@@ -526,7 +648,7 @@ int shutdown(int socket, int how)
 #if LWIP_DNS
 
 // TODO: replace dummy function
-int gethostname(char *name, size_t len)
+int hermit_gethostname(char *name, size_t len)
 {
 	//strncpy(name, "hermit", len);
 	
@@ -535,22 +657,22 @@ int gethostname(char *name, size_t len)
 //	return 0;
 }
 
-struct hostent *gethostbyname(const char* name)
+struct hostent *hermit_gethostbyname(const char* name)
 {
 	return lwip_gethostbyname(name);
 }
 
-int gethostbyname_r(const char *name, struct hostent *ret, char *buf, size_t buflen, struct hostent **result, int *h_errnop)
+int hermit_gethostbyname_r(const char *name, struct hostent *ret, char *buf, size_t buflen, struct hostent **result, int *h_errnop)
 {
 	return lwip_gethostbyname_r(name, ret, buf, buflen, result, h_errnop);
 }
 
-int getaddrinfo(const char *node, const char *service, const struct addrinfo *hints, struct addrinfo **res)
+int hermit_getaddrinfo(const char *node, const char *service, const struct addrinfo *hints, struct addrinfo **res)
 {
 	return lwip_getaddrinfo(node, service, hints, res);
 }
 
-void freeaddrinfo(struct addrinfo *res)
+void hermit_freeaddrinfo(struct addrinfo *res)
 {
 	lwip_freeaddrinfo(res);
 }
@@ -584,11 +706,15 @@ void freeaddrinfo(struct addrinfo *res)
 
 #define RAND_MAX	0x7fffffff
 
-static int rand_init = 0;
 static unsigned int rand_seed = 0;
-static spinlock_t rand_lock = SPINLOCK_INIT;
+static spinlock_irqsave_t rand_lock = SPINLOCK_IRQSAVE_INIT;
 
-static int __rand(unsigned int *seed)
+static void __rand_init(void)
+{
+	rand_seed = get_rdtsc() % 127;
+}
+
+static inline int __rand(unsigned int *seed)
 {
         long k;
         long s = (long)(*seed);
@@ -613,13 +739,9 @@ int lwip_rand(void)
 	}
 #endif
 
-	spinlock_lock(&rand_lock);
-	if (!rand_init) {
-		rand_init = 1;
-		rand_seed = rdtsc() % 127;
-	}
+	spinlock_irqsave_lock(&rand_lock);
 	r = __rand(&rand_seed);
-	spinlock_unlock(&rand_lock);
+	spinlock_irqsave_unlock(&rand_lock);
 
 	return r;
 }
