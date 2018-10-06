@@ -132,7 +132,7 @@ static inline void sys_arch_unprotect(sys_prot_t pval)
 // file descriptors (i.e. all below LWIP_FD_BIT. However redis is indexing
 // a lot of stuff with socket file descriptors values so they cannot be too
 // large
-#define LWIP_FD_BIT	(1 << 12)
+#define LWIP_FD_BIT	(1 << 9)
 
 //#ifndef __KERNEL__
 #if 0
