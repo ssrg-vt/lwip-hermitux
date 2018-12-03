@@ -253,7 +253,7 @@
  * a lot of data that needs to be copied, this should be set high.
  */
 #if !defined MEM_SIZE || defined __DOXYGEN__
-#define MEM_SIZE                        1600
+#define MEM_SIZE                        16384
 #endif
 
 /**
@@ -346,7 +346,7 @@
  * this should be set high.
  */
 #if !defined MEMP_NUM_PBUF || defined __DOXYGEN__
-#define MEMP_NUM_PBUF                   16
+#define MEMP_NUM_PBUF                   128
 #endif
 
 /**
@@ -354,7 +354,7 @@
  * (requires the LWIP_RAW option)
  */
 #if !defined MEMP_NUM_RAW_PCB || defined __DOXYGEN__
-#define MEMP_NUM_RAW_PCB                4
+#define MEMP_NUM_RAW_PCB                128
 #endif
 
 /**
@@ -363,7 +363,7 @@
  * (requires the LWIP_UDP option)
  */
 #if !defined MEMP_NUM_UDP_PCB || defined __DOXYGEN__
-#define MEMP_NUM_UDP_PCB                4
+#define MEMP_NUM_UDP_PCB                128
 #endif
 
 /**
@@ -371,7 +371,7 @@
  * (requires the LWIP_TCP option)
  */
 #if !defined MEMP_NUM_TCP_PCB || defined __DOXYGEN__
-#define MEMP_NUM_TCP_PCB                5
+#define MEMP_NUM_TCP_PCB                128
 #endif
 
 /**
@@ -379,7 +379,7 @@
  * (requires the LWIP_TCP option)
  */
 #if !defined MEMP_NUM_TCP_PCB_LISTEN || defined __DOXYGEN__
-#define MEMP_NUM_TCP_PCB_LISTEN         8
+#define MEMP_NUM_TCP_PCB_LISTEN         128
 #endif
 
 /**
@@ -387,7 +387,7 @@
  * (requires the LWIP_TCP option)
  */
 #if !defined MEMP_NUM_TCP_SEG || defined __DOXYGEN__
-#define MEMP_NUM_TCP_SEG                16
+#define MEMP_NUM_TCP_SEG                128
 #endif
 
 /**
@@ -395,7 +395,7 @@
  * reassembly (whole packets, not fragments!)
  */
 #if !defined MEMP_NUM_REASSDATA || defined __DOXYGEN__
-#define MEMP_NUM_REASSDATA              5
+#define MEMP_NUM_REASSDATA              64
 #endif
 
 /**
@@ -406,7 +406,7 @@
  * returns.
  */
 #if !defined MEMP_NUM_FRAG_PBUF || defined __DOXYGEN__
-#define MEMP_NUM_FRAG_PBUF              15
+#define MEMP_NUM_FRAG_PBUF              64
 #endif
 
 /**
@@ -416,7 +416,7 @@
  * (requires the ARP_QUEUEING option)
  */
 #if !defined MEMP_NUM_ARP_QUEUE || defined __DOXYGEN__
-#define MEMP_NUM_ARP_QUEUE              30
+#define MEMP_NUM_ARP_QUEUE              64
 #endif
 
 /**
@@ -426,7 +426,7 @@
  * (requires the LWIP_IGMP option)
  */
 #if !defined MEMP_NUM_IGMP_GROUP || defined __DOXYGEN__
-#define MEMP_NUM_IGMP_GROUP             8
+#define MEMP_NUM_IGMP_GROUP             64
 #endif
 
 /**
@@ -443,7 +443,7 @@
  * (only needed if you use the sequential API, like api_lib.c)
  */
 #if !defined MEMP_NUM_NETBUF || defined __DOXYGEN__
-#define MEMP_NUM_NETBUF                 2
+#define MEMP_NUM_NETBUF                 22
 #endif
 
 /**
@@ -451,7 +451,7 @@
  * (only needed if you use the sequential API, like api_lib.c)
  */
 #if !defined MEMP_NUM_NETCONN || defined __DOXYGEN__
-#define MEMP_NUM_NETCONN                4
+#define MEMP_NUM_NETCONN                30
 #endif
 
 /**
@@ -460,7 +460,7 @@
  * (only needed if you use tcpip.c)
  */
 #if !defined MEMP_NUM_TCPIP_MSG_API || defined __DOXYGEN__
-#define MEMP_NUM_TCPIP_MSG_API          8
+#define MEMP_NUM_TCPIP_MSG_API          34
 #endif
 
 /**
@@ -469,7 +469,7 @@
  * (only needed if you use tcpip.c)
  */
 #if !defined MEMP_NUM_TCPIP_MSG_INPKT || defined __DOXYGEN__
-#define MEMP_NUM_TCPIP_MSG_INPKT        8
+#define MEMP_NUM_TCPIP_MSG_INPKT        38
 #endif
 
 /**
@@ -492,7 +492,7 @@
  * PBUF_POOL_SIZE: the number of buffers in the pbuf pool.
  */
 #if !defined PBUF_POOL_SIZE || defined __DOXYGEN__
-#define PBUF_POOL_SIZE                  16
+#define PBUF_POOL_SIZE                  128
 #endif
 
 /** MEMP_NUM_API_MSG: the number of concurrently active calls to various
@@ -546,7 +546,7 @@
  * ARP_TABLE_SIZE: Number of active MAC-IP address pairs cached.
  */
 #if !defined ARP_TABLE_SIZE || defined __DOXYGEN__
-#define ARP_TABLE_SIZE                  10
+#define ARP_TABLE_SIZE                  20
 #endif
 
 /** the time an ARP entry stays valid after its last update,
@@ -565,7 +565,7 @@
  * packet in a row to an IP address that is not in the ARP cache.
  */
 #if !defined ARP_QUEUEING || defined __DOXYGEN__
-#define ARP_QUEUEING                    0
+#define ARP_QUEUEING                    1
 #endif
 
 /** The maximum number of packets which may be queued for each
@@ -573,7 +573,7 @@
  *  Old packets are dropped, new packets are queued.
  */
 #if !defined ARP_QUEUE_LEN || defined __DOXYGEN__
-#define ARP_QUEUE_LEN                   3
+#define ARP_QUEUE_LEN                   64
 #endif
 
 /**
@@ -602,7 +602,7 @@
  * on a 32-bit boundary, so setting this to 2 can speed up 32-bit-platforms.
  */
 #if !defined ETH_PAD_SIZE || defined __DOXYGEN__
-#define ETH_PAD_SIZE                    0
+#define ETH_PAD_SIZE                    2
 #endif
 
 /** ETHARP_SUPPORT_STATIC_ENTRIES==1: enable code to support static ARP table
@@ -617,7 +617,7 @@
  * (but this should only occur for AutoIP).
  */
 #if !defined ETHARP_TABLE_MATCH_NETIF || defined __DOXYGEN__
-#define ETHARP_TABLE_MATCH_NETIF        0
+#define ETHARP_TABLE_MATCH_NETIF        1
 #endif
 /**
  * @}
@@ -692,7 +692,7 @@
  * in this time, the whole packet is discarded.
  */
 #if !defined IP_REASS_MAXAGE || defined __DOXYGEN__
-#define IP_REASS_MAXAGE                 3
+#define IP_REASS_MAXAGE                 4
 #endif
 
 /**
@@ -702,7 +702,7 @@
  * packets even if the maximum amount of fragments is enqueued for reassembly!
  */
 #if !defined IP_REASS_MAX_PBUFS || defined __DOXYGEN__
-#define IP_REASS_MAX_PBUFS              10
+#define IP_REASS_MAX_PBUFS              128
 #endif
 
 /**
@@ -1147,7 +1147,7 @@
  * will be TCP_WND >> TCP_RCV_SCALE
  */
 #if !defined TCP_WND || defined __DOXYGEN__
-#define TCP_WND                         (4 * TCP_MSS)
+#define TCP_WND                         (8 * TCP_MSS)
 #endif
 
 /**
@@ -1180,7 +1180,7 @@
  * an upper limit on the MSS advertised by the remote host.
  */
 #if !defined TCP_MSS || defined __DOXYGEN__
-#define TCP_MSS                         536
+#define TCP_MSS                         40000
 #endif
 
 /**
@@ -1192,7 +1192,7 @@
  * netif used for a connection and limits the MSS if it would be too big otherwise.
  */
 #if !defined TCP_CALCULATE_EFF_SEND_MSS || defined __DOXYGEN__
-#define TCP_CALCULATE_EFF_SEND_MSS      1
+#define TCP_CALCULATE_EFF_SEND_MSS      0
 #endif
 
 
@@ -1201,7 +1201,7 @@
  * To achieve good performance, this should be at least 2 * TCP_MSS.
  */
 #if !defined TCP_SND_BUF || defined __DOXYGEN__
-#define TCP_SND_BUF                     (2 * TCP_MSS)
+#define TCP_SND_BUF                     (64 * TCP_MSS)
 #endif
 
 /**
@@ -1209,7 +1209,7 @@
  * as much as (2 * TCP_SND_BUF/TCP_MSS) for things to work.
  */
 #if !defined TCP_SND_QUEUELEN || defined __DOXYGEN__
-#define TCP_SND_QUEUELEN                ((4 * (TCP_SND_BUF) + (TCP_MSS - 1))/(TCP_MSS))
+#define TCP_SND_QUEUELEN                ((33 * (TCP_SND_BUF) + (TCP_MSS - 1))/(TCP_MSS))
 #endif
 
 /**
@@ -1277,7 +1277,7 @@
  * TCP_MSS/4: Try to create 4 fragments or less per TCP packet.
  */
 #if !defined TCP_OVERSIZE || defined __DOXYGEN__
-#define TCP_OVERSIZE                    TCP_MSS
+#define TCP_OVERSIZE                    TCP_MSS*2
 #endif
 
 /**
@@ -1499,7 +1499,7 @@
  * sending for each netif (0 = disabled)
  */
 #if !defined LWIP_LOOPBACK_MAX_PBUFS || defined __DOXYGEN__
-#define LWIP_LOOPBACK_MAX_PBUFS         0
+#define LWIP_LOOPBACK_MAX_PBUFS         64
 #endif
 
 /**
@@ -1684,7 +1684,7 @@
  * timers running in tcpip_thread from another thread.
  */
 #if !defined LWIP_TCPIP_TIMEOUT || defined __DOXYGEN__
-#define LWIP_TCPIP_TIMEOUT              0
+#define LWIP_TCPIP_TIMEOUT              1
 #endif
 
 /** LWIP_NETCONN_SEM_PER_THREAD==1: Use one (thread-local) semaphore per
@@ -2059,7 +2059,7 @@
  * CHECKSUM_GEN_IP==1: Generate checksums in software for outgoing IP packets.
  */
 #if !defined CHECKSUM_GEN_IP || defined __DOXYGEN__
-#define CHECKSUM_GEN_IP                 1
+#define CHECKSUM_GEN_IP                1 
 #endif
 
 /**
@@ -2094,35 +2094,35 @@
  * CHECKSUM_CHECK_IP==1: Check checksums in software for incoming IP packets.
  */
 #if !defined CHECKSUM_CHECK_IP || defined __DOXYGEN__
-#define CHECKSUM_CHECK_IP               1
+#define CHECKSUM_CHECK_IP               0
 #endif
 
 /**
  * CHECKSUM_CHECK_UDP==1: Check checksums in software for incoming UDP packets.
  */
 #if !defined CHECKSUM_CHECK_UDP || defined __DOXYGEN__
-#define CHECKSUM_CHECK_UDP              1
+#define CHECKSUM_CHECK_UDP              0
 #endif
 
 /**
  * CHECKSUM_CHECK_TCP==1: Check checksums in software for incoming TCP packets.
  */
 #if !defined CHECKSUM_CHECK_TCP || defined __DOXYGEN__
-#define CHECKSUM_CHECK_TCP              1
+#define CHECKSUM_CHECK_TCP              0
 #endif
 
 /**
  * CHECKSUM_CHECK_ICMP==1: Check checksums in software for incoming ICMP packets.
  */
 #if !defined CHECKSUM_CHECK_ICMP || defined __DOXYGEN__
-#define CHECKSUM_CHECK_ICMP             1
+#define CHECKSUM_CHECK_ICMP             0
 #endif
 
 /**
  * CHECKSUM_CHECK_ICMP6==1: Check checksums in software for incoming ICMPv6 packets
  */
 #if !defined CHECKSUM_CHECK_ICMP6 || defined __DOXYGEN__
-#define CHECKSUM_CHECK_ICMP6            1
+#define CHECKSUM_CHECK_ICMP6            0
 #endif
 
 /**

@@ -201,14 +201,14 @@
  * LWIP_CHECKSUM_ON_COPY==1: Calculate checksum when copying data from
  * application buffers to pbufs.
  */
-#define LWIP_CHECKSUM_ON_COPY	1
+#define LWIP_CHECKSUM_ON_COPY	0
 
 /**
  * TCPIP_THREAD_PRIO: The priority assigned to the main tcpip thread.
  * The priority value itself is platform-dependent, but is passed to
  * sys_thread_new() when the thread is created.
  */
-#define TCPIP_THREAD_PRIO	HIGH_PRIO
+#define TCPIP_THREAD_PRIO	NORMAL_PRIO
 
 /**
  * MEMP_NUM_UDP_PCB: the number of UDP protocol control blocks. One
@@ -264,7 +264,7 @@
  * MEM_SIZE: the size of the heap memory. If the application will send
  * a lot of data that needs to be copied, this should be set high.
  */
-#define MEM_SIZE		(32*0x1000)
+#define MEM_SIZE		(50*0x1000)
 
 /**
  * MEMP_NUM_TCPIP_MSG_API: the number of struct tcpip_msg, which are useod
